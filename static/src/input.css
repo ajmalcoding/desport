@@ -1,1 +1,74 @@
 @import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-outfit: "Outfit", sans-serif;
+
+  /* Colors - v4 maps these directly to utility classes like bg-primary */
+  --color-background: hsl(210, 20%, 98%);
+  --color-foreground: hsl(222, 47%, 11%);
+  
+  --color-primary: hsl(172, 66%, 50%);
+  --color-primary-foreground: hsl(210, 20%, 98%);
+
+  --color-secondary: hsl(210, 40%, 96%);
+  --color-secondary-foreground: hsl(222, 47%, 11%);
+
+  --color-muted: hsl(210, 40%, 96%);
+  --color-muted-foreground: hsl(215, 16%, 47%);
+
+  --color-accent: hsl(262, 83%, 58%);
+  --color-accent-foreground: hsl(210, 20%, 98%);
+
+  --color-border: hsl(214, 32%, 91%);
+  
+  --color-card: hsl(0, 0%, 100%);
+  --color-card-foreground: hsl(222, 47%, 11%);
+
+  /* Animations & Keyframes */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-up: fadeUp 0.5s ease-out forwards;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* --- Extra Custom CSS --- */
+
+@layer base {
+  body {
+    @apply font-outfit bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(172, 66%, 50%) 0%, hsl(262, 83%, 58%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-btn {
+    background: linear-gradient(135deg, hsl(172, 66%, 50%) 0%, hsl(172, 66%, 40%) 100%);
+    @apply text-white;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 ease-in-out;
+  }
+
+  .card-hover:hover {
+    @apply -translate-y-1 shadow-2xl;
+  }
+}

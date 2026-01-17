@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}Folio - The premier platform for creative freelancers to display stunning portfolios and connect with clients worldwide.{% endblock %}">
+    <title>{% block title %}Desport{% endblock %}</title>
+    
+    <!-- Google Fonts - Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <link href="{% static 'src/output.css' %}" rel="stylesheet">
+
+</head>
+<body class="bg-background text-foreground min-h-screen">
+    {% include 'includes/navbar.html' %}
+    {% block content %}
+    {% endblock %}
+    {% include 'includes/footer.html' %}
+    
+     <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+    
+</body>
+</html>

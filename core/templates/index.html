@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+    {% block content %}
+    <!-- Hero Section -->
+<section class="pt-32 pb-20 px-4 relative overflow-hidden">
+    <!-- Background Elements -->
+    <div class="absolute top-20 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float"></div>
+    <div class="absolute bottom-0 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-float" style="animation-delay: -3s;"></div>
+    
+    <div class="container mx-auto text-center relative z-10">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 animate-fade-up">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+            </svg>
+            <span class="text-sm font-medium text-muted-foreground">
+                Discover 50,000+ creative portfolios
+            </span>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 animate-fade-up" style="animation-delay: 0.1s;">
+            Showcase Your Work.
+            <br>
+            <span class="gradient-text">Get Hired.</span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up" style="animation-delay: 0.2s;">
+            The premier platform for creative digital Designers to display stunning portfolios 
+            and connect with clients worldwide.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up" style="animation-delay: 0.3s;">
+            <button class="px-8 py-4 rounded-xl gradient-btn hover:opacity-90 transition-all hover:scale-105 flex items-center gap-2 font-semibold">
+                Start Your Portfolio
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </button>
+            <button class="px-8 py-4 rounded-xl border border-border hover:bg-muted transition-colors font-medium text-foreground">
+                Browse Designers
+            </button>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap justify-center gap-12 mt-16 animate-fade-up" style="animation-delay: 0.4s;">
+            <div class="text-center">
+                <p class="text-3xl md:text-4xl font-bold text-foreground">50K+</p>
+                <p class="text-muted-foreground">Portfolios</p>
+            </div>
+            <div class="text-center">
+                <p class="text-3xl md:text-4xl font-bold text-foreground">12K+</p>
+                <p class="text-muted-foreground">Designers</p>
+            </div>
+            <div class="text-center">
+                <p class="text-3xl md:text-4xl font-bold text-foreground">$8M+</p>
+                <p class="text-muted-foreground">Projects Completed</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    {% endblock %}

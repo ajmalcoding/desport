@@ -9,6 +9,8 @@ class Project(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, unique=True, blank=True)
     description = models.TextField(blank=True)
+    highlights = models.TextField(blank=True)
+    tools_used = models.TextField(blank=True)
     categories = models.ManyToManyField(Category, related_name='projects')
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

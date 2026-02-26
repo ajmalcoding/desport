@@ -24,6 +24,7 @@ urlpatterns = [
     path('',include('core.urls')),
     path('categories/',include('categories.urls')),
     path('portfolio/',include('portfolios.urls')),
+    path('designers/',include('accounts.urls')),
 
 ] 
 if settings.DEBUG:

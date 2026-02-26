@@ -1,0 +1,302 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Profile Spacer (navbar offset) -->
+<section class="pt-24"></section>
+
+<!-- Profile Content Section -->
+<section class="pb-20 px-4">
+    <div class="container mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+             <!-- LEFT SIDEBAR -->
+            <div class="lg:col-span-1 lg:sticky lg:top-24 self-start space-y-6 ">
+                <!-- Avatar + Identity -->
+                <div class="bg-card rounded-2xl border border-border p-6 animate-fade-up">
+                    <!-- Avatar with verified badge -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="relative mb-4">
+                            {% if designer.avatar %}
+                            <img src="{{ designer.avatar.url }}"
+                                 alt="{{ designer.name }}"
+                                 class="w-24 h-24 rounded-full object-cover border-4 border-background shadow-lg">
+                            {% endif %}
+                            {% if designer.is_verified|default:True %}
+                            <div class="absolute -bottom-1 -right-1 w-7 h-7 bg-primary rounded-full flex items-center justify-center border-2 border-background">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <h1 class="text-xl font-bold text-foreground">{{ designer.name }}</h1>
+                        <p class="text-sm text-muted-foreground mt-1 mb-6">{{ designer.title }}</p>
+                        <span class="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            {{designer.availability_status}}
+                        </span>
+                    </div>
+                    <!-- Location & Rating -->
+                    <div class="mt-5 pt-5 border-t border-border space-y-3 text-sm text-muted-foreground">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            {{ designer.location }}
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            <span class="font-medium text-foreground">{{ designer.rating|default:"4.9" }}</span>
+                            <span>({{ designer.review_count|default:"127" }} reviews)</span>
+                        </div>
+                    </div>
+                    <!-- Social Links -->
+                    <div class="flex items-center justify-center gap-2 mt-5 pt-5 border-t border-border">
+                        {% if designer.social_links.twitter %}
+                        <a href="{{ designer.social_links.twitter|default:'#' }}" target="_blank" class="w-8 h-8 rounded-lg bg-muted hover:bg-muted/80 transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        {% endif %}
+                        {% if designer.social_links.instagram %}
+                        <a href="{{ designer.social_links.instagram|default:'#' }}" target="_blank" class="w-8 h-8 rounded-lg bg-muted hover:bg-muted/80 transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                            </svg>
+                        </a>
+                        {% endif %}
+                        {% if designer.social_links.linkedin %}
+                        <a href="{{ designer.social_links.linkedin|default:'#' }}" target="_blank" class="w-8 h-8 rounded-lg bg-muted hover:bg-muted/80 transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        {% endif %}
+                        {% if designer.social_links.github %}
+                        <a href="{{ designer.social_links.github|default:'#' }}" target="_blank" class="w-8 h-8 rounded-lg bg-muted hover:bg-muted/80 transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-muted-foreground" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        {% endif %}
+                        {% if designer.social_links.website %}
+                        <a href="{{ designer.social_links.website|default:'#' }}" target="_blank" class="w-8 h-8 rounded-lg bg-muted hover:bg-muted/80 transition-colors flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            </svg>
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="mt-5 pt-5 border-t border-border space-y-2">
+                        <button class="w-full px-4 py-2.5 rounded-lg gradient-btn hover:opacity-90 transition-opacity font-medium text-sm">
+                            Hire Me
+                        </button>
+                        <button class="w-full px-4 py-2.5 rounded-lg border border-border hover:bg-muted transition-colors font-medium text-sm">
+                            Message
+                        </button>
+                        <div class="relative">
+                            <button id="profile-share-btn" class="w-full px-4 py-2.5 rounded-lg border border-border hover:bg-muted transition-colors font-medium text-sm flex items-center justify-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-muted-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                </svg>
+                                Share
+                            </button>
+                            <div id="profile-share-dropdown" class="hidden relative left-0 top-full mt-2 w-full bg-card rounded-xl border border-border shadow-lg py-2 z-10">
+                                <button id="copy-profile-link" class="w-full px-4 py-2 text-left text-sm hover:bg-muted transition-colors flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                    </svg>
+                                    <span id="copy-profile-text">Copy Link</span>
+                                </button>
+                                <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}" target="_blank" class="w-full px-4 py-2 text-sm hover:bg-muted transition-colors flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                    </svg>
+                                    Share on X
+                                </a>
+                                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="w-full px-4 py-2 text-sm hover:bg-muted transition-colors flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                    Share on LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- About Me -->
+                <div class="bg-card rounded-2xl border border-border p-6 animate-fade-up">
+                    <h2 class="text-lg font-bold text-foreground mb-3">About Me</h2>
+                    <div class="space-y-3 text-sm text-muted-foreground leading-relaxed">
+                        <p>{{ designer.bio }}</p>
+                    </div>
+                </div>
+
+                <!-- Skills & Expertise -->
+                <div class="bg-card rounded-2xl border border-border p-6 animate-fade-up">
+                     <h2 class="text-lg font-bold text-foreground mb-3">Skills & Expertise</h2>
+                    <div class="space-y-4">
+                        <div>
+                             <h3 class="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">Design</h3>
+                            <div class="flex flex-wrap gap-1.5">
+                                {% for skill in designer.skills.all %}
+                                <span class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">{{ skill.name }}</span>
+                                {% empty %}
+                                <span class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Logo Design</span>
+                                <span class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">UI/UX</span>
+                                <span class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Typography</span>
+                                <span class="px-2.5 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium">Color Theory</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div>
+                             <h3 class="text-xs font-medium text-muted-foreground mb-2 uppercase tracking-wider">Tools</h3>
+                            <div class="flex flex-wrap gap-1.5">
+                                {% for tool in designer.tools %}
+                                <span class="px-2.5 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium">{{ tool }}</span>
+                                {% empty %}
+                                <span class="px-2.5 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium">Illustrator</span>
+                                <span class="px-2.5 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium">Photoshop</span>
+                                <span class="px-2.5 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium">After Effects</span>
+                                {% endfor %}
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+
+               
+                <!-- Quick Stats -->
+                <div class="bg-card rounded-2xl border border-border p-6 animate-fade-up">
+                    <h2 class="text-lg font-bold text-foreground mb-3">Quick Stats</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-foreground">{{ projects_count }}</div>
+                            <div class="text-xs text-muted-foreground">Projects</div>
+                        </div>
+                         <div class="text-center">
+                            <div class="text-2xl font-bold text-foreground">{{ designer.total_likes|default:"8.2K" }}</div>
+                            <div class="text-xs text-muted-foreground">Likes</div>
+                        </div>
+                          <div class="text-center">
+                            <div class="text-2xl font-bold text-foreground">{{ designer.total_views|default:"44K" }}</div>
+                            <div class="text-xs text-muted-foreground">Views</div>
+                        </div>
+                         <div class="text-center">
+                            <div class="text-2xl font-bold text-foreground">{{ designer.user.date_joined|date:"Y" }}</div>
+                            <div class="text-xs text-muted-foreground">Member Since</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT MAIN CONTENT -->
+            <div class="lg:col-span-3 space-y-6">
+
+                <!-- Tab Bar -->
+                <div class="border-b border-border">
+                    <nav class="flex gap-8">
+                        <button id="tab-work" onclick="switchTab('work')" class="pb-3 text-sm font-semibold text-foreground border-b-2 border-primary -mb-px">Work</button>
+                        <button id="tab-services" onclick="switchTab('services')" class="pb-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors -mb-px">Services</button>
+                    </nav>
+                </div>
+
+                <!-- WORK TAB CONTENT -->
+                <div id="content-work">
+                    <h2 class="text-lg font-semibold text-foreground mb-6">Latest</h2>
+                    <!-- <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> -->
+                        <!-- Project Card  -->
+                        {% if projects %}
+                        {% include 'includes/project_cards.html' %}
+                        {% else %}
+                        <!-- If no projects in this category -->
+                            <h2 class="text-3xl md:text-4xl font-bold text-foreground text-center py-32">
+                                No projects yet.
+                            </h2>
+                        {% endif %}
+
+                    <!-- </div> -->
+                </div>
+
+                <!-- SERVICES TAB CONTENT (hidden by default) -->
+                <div id="content-services" class="hidden">
+                    <h2 class="text-lg font-semibold text-foreground mb-6">Services Offered</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Service Card  -->
+                         {% for service in services %}
+                        <div class="bg-card rounded-2xl border border-border p-6 card-hover flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-foreground mb-2">{{ service.title }}</h3>
+                                <p class="text-sm text-muted-foreground mb-4">{{ service.description |truncatewords:30 }} </p>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium text-foreground">Starting at ${{ service.price }}</span>
+                                    <span class="text-xs text-muted-foreground">{{ service.delivery_time }} week{% if service.delivery_time > 1 %}s{% endif %}</span>
+                                </div>
+                                <a href="#"
+                                    class="mt-6 block w-full text-center py-2 rounded-xl gradient-btn hover:opacity-90 transition-opacity font-medium text-sm">
+                                        Order Service
+                                </a>
+                            </div>
+                        </div>
+                        {% empty %}
+                            <p>No services added yet.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function switchTab(tab) {
+    document.getElementById('content-work').classList.toggle('hidden', tab !== 'work');
+    document.getElementById('content-services').classList.toggle('hidden', tab !== 'services');
+
+    var workBtn = document.getElementById('tab-work');
+    var servicesBtn = document.getElementById('tab-services');
+    var activeClasses = 'pb-3 -mb-px text-sm font-semibold text-foreground border-b-2 border-primary';
+    var inactiveClasses = 'pb-3 -mb-px text-sm font-medium text-muted-foreground hover:text-foreground transition-colors';
+
+    workBtn.className = tab === 'work' ? activeClasses : inactiveClasses;
+    servicesBtn.className = tab === 'services' ? activeClasses : inactiveClasses;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Share dropdown
+    var shareBtn = document.getElementById('profile-share-btn');
+    var shareDropdown = document.getElementById('profile-share-dropdown');
+
+    if (shareBtn && shareDropdown) {
+        shareBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            shareDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', function() {
+            shareDropdown.classList.add('hidden');
+        });
+    }
+
+    // Copy profile link
+    var copyLink = document.getElementById('copy-profile-link');
+    if (copyLink) {
+        copyLink.addEventListener('click', function() {
+            navigator.clipboard.writeText(window.location.href);
+            var copyText = document.getElementById('copy-profile-text');
+            if (copyText) {
+                copyText.textContent = 'Copied!';
+                setTimeout(function() { copyText.textContent = 'Copy Link'; }, 2000);
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

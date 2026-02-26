@@ -1,11 +1,11 @@
 from django.db import models
-from accounts.models import Profile
+from accounts.models import DesignerProfile
 from categories.models import Category
 from django.utils.text import slugify
 
 # Create your models here.
 class Project(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="projects")
+    profile = models.ForeignKey(DesignerProfile, on_delete=models.CASCADE, related_name="projects")
     title = models.CharField(max_length=100)
     slug = models.SlugField(max_length=120, unique=True, blank=True)
     description = models.TextField(blank=True)

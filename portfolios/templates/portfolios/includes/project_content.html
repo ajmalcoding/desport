@@ -75,10 +75,10 @@
                     <div class="text-sm text-muted-foreground mb-4">
                         <span class="font-semibold text-foreground">${{ project.creator.hourly_rate|default:"85" }}/hr</span> starting rate
                     </div>
-                    <a href="/freelancers/{{ project.creator.slug|default:'sarah-chen' }}" class="gradient-btn w-full py-3 rounded-xl font-semibold text-center block">
+                    <a href="/freelancers/{{ project.profile.slug|default:'sarah-chen' }}" class="gradient-btn w-full py-3 rounded-xl font-semibold text-center block">
                         Hire Me
                     </a>
-                    <a href="/freelancers/{{ project.creator.slug|default:'sarah-chen' }}" class="w-full py-3 rounded-xl font-medium text-center border border-border hover:bg-muted transition-colors mt-3 block text-foreground">
+                    <a href="/designers/{{ project.profile.user.username |default:'sarah-chen' }}" class="w-full py-3 rounded-xl font-medium text-center border border-border hover:bg-muted transition-colors mt-3 block text-foreground">
                         View Profile
                     </a>
                 </div>

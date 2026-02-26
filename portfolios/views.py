@@ -11,6 +11,3 @@ def project_detail_view(request, project_slug):
     }
 
     return render(request, 'portfolios/project_detail_view.html', context)
-
-# def project_detail_view(request):
-#     return render(request, 'portfolios/project_detail_view.html')

@@ -1,0 +1,57 @@
+<!-- Designer Filters Sidebar -->
+<aside id="filters-panel" class="hidden lg:block space-y-8">
+
+    <!-- Category Filter -->
+    <div>
+        <h3 class="font-semibold text-foreground mb-3 text-sm uppercase tracking-wider">Category</h3>
+        <div class="space-y-2" id="category-filters">
+            <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="radio" name="category" value="" {% if request.GET.category %} checked {% endif %} class="w-4 h-4 accent-[hsl(172,66%,50%)]">
+                <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors">All</span>
+            </label>
+            {% for category in categories %}
+            <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="radio" name="category" value="{{category.slug|lower}}" {% if request.GET.category == category.slug %} checked {% endif %} class="w-4 h-4 accent-[hsl(172,66%,50%)]">
+                <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{{category.name}}</span>
+            </label>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Skills Filter -->
+    <div>
+        <h3 class="font-semibold text-foreground mb-3 text-sm uppercase tracking-wider">Skills</h3>
+        <div class="space-y-2" id="skills-filters">
+            {% for skill in skills %}
+            <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" name="skill" value="{{ skill.slug|lower }}" {% if skill.slug|lower in selected_skill %} checked {% endif %} class="w-4 h-4 rounded accent-[hsl(172,66%,50%)]">
+                <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{{skill}}</span>
+            </label>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Location Filter -->
+    <div>
+        <h3 class="font-semibold text-foreground mb-3 text-sm uppercase tracking-wider">Location</h3>
+        <div class="space-y-2" id="location-filters">
+            <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="radio" name="location" value="" {% if request.GET.location %} checked {% endif %} class="w-4 h-4 accent-[hsl(172,66%,50%)]">
+                <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors">All Locations</span>
+            </label>
+            {% for location in locations %}
+            <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="radio" name="location" value="{{ location }}" {% if request.GET.location == location %} checked {% endif %} class="w-4 h-4 accent-[hsl(172,66%,50%)]">
+                <span class="text-sm text-muted-foreground group-hover:text-foreground transition-colors">{{location}}</span>
+            </label>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <button type="submit" class="w-full py-2.5 px-4 mb-2 rounded-xl border border-border gradient-btn font-medium hover:opacity-90 hover:bg-muted transition-colors">Apply Filters</button>
+
+    <!-- Clear Filters -->
+    <a href="{% url 'designers_list' %}" class="w-full py-2.5 px-4 rounded-xl border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors block text-center ">
+        Clear All Filters
+    </a>
+</aside>

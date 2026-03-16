@@ -1,58 +1,94 @@
-{% for project in projects %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Portfolio Project Cards -->
-                <div class="card-hover rounded-2xl overflow-hidden bg-card border border-border group">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <!-- Thumbnail -->
-                        {% for img in project.images.all %}
-                        <img src="{{img.image.url}}" 
-                            alt="No Thumbnail"
-                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        {% endfor %}
-                        <!-- View more button -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                            <a href="/portfolio/{{project.slug}}" class="px-4 py-2 rounded-lg bg-white/20 backdrop-blur-sm text-white text-sm font-medium flex items-center gap-2">
-                                <span>View Project</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg>
-                            </a>
-                        </div>
-                        <!-- Category Badge -->
-                        <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-medium text-foreground">
-                            {{project.categories.first.name}}
-                        </span>
-                    </div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for project in projects %}
+    <!-- Portfolio Project Cards -->
+    <div class="card-hover rounded-2xl overflow-hidden bg-card border border-border group">
+        <div class="relative aspect-[4/3] overflow-hidden">
+            <!-- Thumbnail -->
+            {% for img in project.images.all %}
+            <img src="{{img.image.url}}" 
+                alt="No Thumbnail"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+            {% endfor %}
+            <!-- View more button -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                <a href="{% url 'project_detail_view' project.slug %}" class="px-4 py-2 rounded-lg bg-white/20 backdrop-blur-sm text-white text-sm font-medium flex items-center gap-2">
+                    <span>View Project</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                </a>
+            </div>
+            <!-- Category Badge -->
+            <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/90 text-xs font-medium text-foreground">
+                {{project.categories.first.name}}
+            </span>
+        </div>
                     
-                    <!-- Ptoject title and Avatar -->
-                    <div class="p-4">
-                        <h3 class="font-semibold text-foreground mb-2">{{project.title}}</h3>
-                        <div class="flex items-center justify-between">
-                            <a href="/designers/{{ project.profile.user.username |default:'sarah-chen' }}"class="flex items-center gap-2">
-                                <img src="{{project.profile.avatar.url}}" 
-                                    alt="No Avatar"
-                                    class="w-6 h-6 rounded-full object-cover">
-                                <span class="text-sm text-muted-foreground">{{project.profile.name}}</span>
-                            </a>
-
-                            <!-- Likes and Views Count -->
-                            <div class="flex items-center gap-3 text-sm text-muted-foreground">
-                                <span class="flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                    </svg>
-                                    1.2K <!-- Sample count -->
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                    8.5K <!-- Sample count -->
-                                </span>
-                            </div>
+        <!-- Ptoject title and Avatar -->
+        <div class="p-4">
+            <h3 class="font-semibold text-foreground mb-2">{{project.title}}</h3>
+            <div class="flex items-center justify-between">
+                <a href="{% url 'designer_profile' project.profile.user.username %}"class="flex items-center gap-2">
+                    {% if project.profile.avatar %}
+                    <img src="{{project.profile.avatar.url}}" 
+                        alt="No Avatar"
+                        class="w-6 h-6 rounded-full object-cover">
+                    {% else %} <!-- if no avatar -->
+                        <div class="w-6 h-6 rounded-full bg-muted flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 text-muted-foreground">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
                         </div>
-                    </div>
+                    {% endif %}
+                    <span class="text-sm text-muted-foreground">{{project.profile.name}}</span>
+                </a>
+
+                <!-- Likes and Views Count -->
+                <div class="flex items-center gap-3 text-sm text-muted-foreground">
+                    <span class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        1.2K <!-- Sample count -->
+                    </span>
+                    <span class="flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        8.5K <!-- Sample count -->
+                    </span>
                 </div>
             </div>
-{% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+    <div class="flex items-center justify-center mt-12 space-x-2 gap-1">
+        {% if projects.has_other_pages %}
+
+            {% if projects.has_previous %}
+                <a href="?page={{ projects.previous_page_number }}" class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Prev </a>
+            {% else %}
+                <span class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Prev </span>
+            {% endif %}
+
+            {% for num in projects.paginator.page_range %}
+                {% if projects.number == num %}
+                    <span class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium"> {{ num }} </span>
+                {% else %}
+                    <a href="?page={{ num }}" class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> {{ num }} </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if projects.has_next %}
+                <a href="?page={{ projects.next_page_number }}" class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Next </a>
+            {% else %}
+                <span class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Next </span>
+            {% endif %}
+
+        {% endif %}
+        
+    </div>

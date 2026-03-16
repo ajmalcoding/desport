@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
-from accounts.models import DesignerProfile, Skill
+from .models import DesignerProfile, Skill
 from categories.models import Category
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 def designer_profile(request, username):
@@ -11,10 +12,14 @@ def designer_profile(request, username):
     projects = designer.projects.all()
     services = designer.services.all()
     projects_count = designer.projects.count()
+
+    paginator = Paginator(projects, 9)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     context = {
         'designer': designer,
-        'projects': projects,
+        'projects': page_obj,
         'services': services,
         'projects_count': projects_count,
     }
@@ -29,7 +34,7 @@ def designers_list(request):
     designers = DesignerProfile.objects.all()
 
     if search:
-        designers = designers.filter(Q(user__username__icontains=search) | Q(name__icontains=search) | Q(location__icontains=search) | Q(categories__name__icontains=search) | Q(title__icontains=search))
+        designers = designers.filter(Q(user__username__icontains=search) | Q(name__icontains=search) | Q(location__icontains=search) | Q(categories__name__icontains=search) | Q(title__icontains=search)).distinct()
 
     if category:
         designers = designers.filter(categories__slug=category)
@@ -40,12 +45,20 @@ def designers_list(request):
     if location:
         designers = designers.filter(location__icontains=location)
 
+    paginator = Paginator(designers, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    query_params = request.GET.copy()
+    query_params.pop('page', None)
+    query_string = query_params.urlencode()
+
     categories = Category.objects.all()
     skills = Skill.objects.all()
     locations = DesignerProfile.objects.exclude(location="").values_list("location", flat=True).distinct()
 
     context = {
-        'designers': designers,
+        'designers': page_obj,
+        'query_string': query_string,
         'skills': skills,
         'selected_skill':selected_skill,
         'categories': categories,

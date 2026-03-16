@@ -3,7 +3,7 @@
     <!-- Sort Bar -->
     <div class="flex items-center justify-between mb-6">
         <p class="text-sm text-muted-foreground">
-            <span id="results-count">{{designers.count}}</span> designers found
+            <span id="results-count">{{designers.paginator.count}}</span> designers found
         </p>
         <select id="sort-select" onchange="sortDesigners()" class="px-3 py-2 rounded-xl bg-card border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50">
             <option value="relevance">Sort: Relevance</option>
@@ -54,15 +54,36 @@
                     </div>
                     {% endif %}
                 </div>
-                <a href="/designers/{{designer.user.username}}/" class="mt-auto inline-block w-full py-2.5 rounded-xl border border-border text-sm font-medium hover:bg-muted transition-colors">View Profile</a>
+                <a href="{% url 'designer_profile' designer.user.username %}" class="mt-auto inline-block w-full py-2.5 rounded-xl border border-border text-sm font-medium hover:bg-muted transition-colors">View Profile</a>
             </div>
         {% endfor %}
     </div>
 
-    <!-- Load More -->
-    <div class="text-center mt-10">
-        <button id="load-more-btn" class="gradient-btn px-8 py-3 rounded-xl font-medium hover:opacity-90 transition-opacity">
-            Load More
-        </button>
+    <!-- Pagination -->
+    <div class="flex items-center justify-center mt-12 space-x-2 gap-1">
+        {% if designers.has_other_pages %}
+
+            {% if designers.has_previous %}
+                <a href="?page={{ designers.previous_page_number }}&{{ query_string }}" class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Prev </a>
+            {% else %}
+                <span class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Prev </span>
+            {% endif %}
+
+            {% for num in designers.paginator.page_range %}
+                {% if designers.number == num %}
+                    <span class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-medium"> {{ num }} </span>
+                {% else %}
+                    <a href="?page={{ num }}&{{ query_string }}" class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> {{ num }} </a>
+                {% endif %}
+            {% endfor %}
+
+            {% if designers.has_next %}
+                <a href="?page={{ designers.next_page_number }}&{{ query_string }}" class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Next </a>
+            {% else %}
+                <span class="px-4 py-2 rounded-lg border border-border text-sm hover:bg-muted transition"> Next </span>
+            {% endif %}
+
+        {% endif %}
+        
     </div>
 </div>

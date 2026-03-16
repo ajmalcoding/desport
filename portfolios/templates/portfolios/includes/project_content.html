@@ -46,9 +46,17 @@
                 <!-- Creator Card -->
                 <div class="bg-card rounded-2xl border border-border p-6 card-hover">
                     <div class="flex items-start gap-4 mb-4">
+                        {% if project.profile.avatar %}
                         <img src="{{ project.profile.avatar.url|default:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop' }}" 
                              alt="{{ project.creator.name|default:'Sarah Chen' }}" 
                              class="w-16 h-16 rounded-full object-cover">
+                        {% else %} <!-- if no avatar -->
+                        <div class="w-16 h-16 rounded-full bg-muted flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-20 h-20 text-muted-foreground">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+                        </div>
+                        {% endif %}
                         <div class="flex-1">
                             <div class="flex items-center gap-2">
                                 <h3 class="font-semibold text-foreground">{{ project.profile.name|default:"Designer name" }}</h3>
@@ -75,10 +83,10 @@
                     <div class="text-sm text-muted-foreground mb-4">
                         <span class="font-semibold text-foreground">${{ project.creator.hourly_rate|default:"85" }}/hr</span> starting rate
                     </div>
-                    <a href="/freelancers/{{ project.profile.slug|default:'sarah-chen' }}" class="gradient-btn w-full py-3 rounded-xl font-semibold text-center block">
+                    <a href="#" class="gradient-btn w-full py-3 rounded-xl font-semibold text-center block">
                         Hire Me
                     </a>
-                    <a href="/designers/{{ project.profile.user.username |default:'sarah-chen' }}" class="w-full py-3 rounded-xl font-medium text-center border border-border hover:bg-muted transition-colors mt-3 block text-foreground">
+                    <a href="{% url 'designer_profile' project.profile.user.username %}" class="w-full py-3 rounded-xl font-medium text-center border border-border hover:bg-muted transition-colors mt-3 block text-foreground">
                         View Profile
                     </a>
                 </div>
